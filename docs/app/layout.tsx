@@ -1,49 +1,89 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import { Layout, Main, Section, Container } from "@/components/craft";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Analytics } from "@vercel/analytics/react";
+import { Inter as FontSans } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+import "./globals.css";
+
+import { Button } from "@/components/ui/button";
+import { NavMenu } from "@/components/nav/nav-menu";
+import { MobileNav } from "@/components/nav/mobile-nav";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+
+import Logo from "@/public/logo.svg";
+
+import Image from "next/image";
+import Link from "next/link";
+
+import { cn } from "@/lib/utils";
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
-  title: "craft-ds | Lightweight Design System for React and Next.js",
-  description:
-    "A lightweight, customizable design system for React and Next.js applications. Created by Bridger Tower.",
+  title: "Ralph Vince's FinTec Systems",
+  description: "A collection of formulas and calculators for financial engineering",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <Layout className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Main>
-            <Section>
-              <Container>{children}</Container>
-            </Section>
-          </Main>
+          <Nav />
+          {children}
         </ThemeProvider>
-        <Analytics />
       </body>
-    </Layout>
+    </html>
   );
 }
+
+const Nav = ({ className, children, id }: NavProps) => {
+  return (
+    <nav
+      className={cn("sticky z-50 top-0 bg-background", "border-b", className)}
+      id={id}
+    >
+      <div
+        id="nav-container"
+        className="max-w-5xl mx-auto py-4 px-6 sm:px-8 flex justify-between items-center"
+      >
+        <Link
+          className="hover:opacity-75 transition-all flex gap-2 items-center"
+          href="/"
+        >
+          <h2 className="sr-only">Craft UI</h2>
+          <Image
+            src={Logo}
+            alt="Logo"
+            className="invert dark:invert-0"
+            width={84}
+            height={30.54}
+          ></Image>
+        </Link>
+        {children}
+        <div className="flex items-center gap-2">
+          <NavMenu />
+          <ThemeToggle />
+          <Button asChild className="hidden sm:flex">
+            <Link href="https://9d8.dev">Get Started</Link>
+          </Button>
+          <MobileNav />
+        </div>
+      </div>
+    </nav>
+  );
+};

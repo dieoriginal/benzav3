@@ -1,0 +1,1 @@
+https://www.futurefonts.xyz/slobzheninov/weird-serif weid sserif
