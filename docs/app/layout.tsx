@@ -22,8 +22,9 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Ralph Vince's FinTec Systems",
-  description: "A collection of formulas and calculators for financial engineering",
+  title: "Denilson Benza",
+  description:
+    "A collection of formulas and calculators for financial engineering",
 };
 
 export default function RootLayout({
@@ -65,14 +66,7 @@ const Nav = ({ className, children, id }: NavProps) => {
           className="hover:opacity-75 transition-all flex gap-2 items-center"
           href="/"
         >
-          <h2 className="sr-only">Craft UI</h2>
-          <Image
-            src={Logo}
-            alt="Logo"
-            className="invert dark:invert-0"
-            width={84}
-            height={30.54}
-          ></Image>
+          <h1>BENZA</h1>
         </Link>
         {children}
         <div className="flex items-center gap-2">
